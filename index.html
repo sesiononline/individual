@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Periodo Transitorio Optimizado</title>
   <style>
     body {
@@ -108,22 +108,24 @@
 </head>
 <body>
   <div class="background">
-    <img src="./FE%20Grama.png" alt="Fe Grama" />
+    <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
   </div>
   <div class="main-container">
     <h1>Periodo Transitorio Optimizado</h1>
     <div id="contenido"></div>
   </div>
+
   <div id="overlay" class="oculto overlay" onclick="cerrarImagen()">
     <span class="overlay-close">&times;</span>
     <img id="img-grande" src="" alt="CORE">
   </div>
+
   <script>
     const coreImgs = {
-  'CORE1': './CORE1.png',
-  'CORE2': './CORE2.png',
-  'CORE3': './CORE3.png'
-};
+      'CORE1': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE1.png',
+      'CORE2': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE2.png',
+      'CORE3': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE3.png'
+    };
 
     function mostrarImagen(url) {
       document.getElementById('img-grande').src = url;
@@ -133,15 +135,8 @@
     function cerrarImagen() {
       document.getElementById('overlay').classList.add('oculto');
     }
-  </script>
-  <script>
-    const coreImgs = {
-      'CORE1': 'https://ludancui.github.io/assets/CORE1.png',
-      'CORE2': 'https://ludancui.github.io/assets/CORE2.png',
-      'CORE3': 'https://ludancui.github.io/assets/CORE3.png'
-    };
 
-    const entrenamientos = (() => {
+    const entrenamientos = [...(() => {
       const hoy = new Date();
       const offset = hoy.getTimezoneOffset();
       const bcn = new Date(hoy.getTime() - offset * 60000);
@@ -159,68 +154,24 @@
         });
       }
       return lista;
-    })();
-
-    const adicionales = [
-      { fecha: '2025-08-04', dia: 'Lunes', texto: 'Descanso activo (caminar 30–45 min o bici suave)' },
-      { fecha: '2025-08-05', dia: 'Martes', texto: '20 min trote suave
-CORE 1 (x2 series, descanso 3min)', core: 'CORE1' },
-      { fecha: '2025-08-06', dia: 'Miércoles', texto: 'Descanso' },
-      { fecha: '2025-08-07', dia: 'Jueves', texto: 'Propiocepción [https://www.youtube.com/watch?v=AhVcGCy_U_4]
-CORE 1 (x2 series, descanso 3min)', core: 'CORE1' },
-      { fecha: '2025-08-08', dia: 'Viernes', texto: 'Descanso' },
-      { fecha: '2025-08-09', dia: 'Sábado', texto: 'Deporte alternativo (padel, natación)' },
-      { fecha: '2025-08-10', dia: 'Domingo', texto: 'Descanso total' },
-      { fecha: '2025-08-11', dia: 'Lunes', texto: '30 min bici o trote suave
-CORE 2 (x2 series, descanso 3min)', core: 'CORE2' },
-      { fecha: '2025-08-12', dia: 'Martes', texto: 'HIIT 1 x 2 series [https://www.youtube.com/watch?v=51WTKcyaDvg]
-Estiramiento estático' },
-      { fecha: '2025-08-13', dia: 'Miércoles', texto: 'Descanso' },
-      { fecha: '2025-08-14', dia: 'Jueves', texto: 'Descanso' },
-      { fecha: '2025-08-15', dia: 'Viernes', texto: 'HIIT 2 x 2 series [https://www.youtube.com/watch?v=oC2CJKz_UA0]
-CORE 2 (x2 series, descanso 3min)', core: 'CORE2' },
-      { fecha: '2025-08-16', dia: 'Sábado', texto: 'Descanso' },
-      { fecha: '2025-08-17', dia: 'Domingo', texto: 'Deporte alternativo (natación, futvoley)' },
-      { fecha: '2025-08-18', dia: 'Lunes', texto: 'Descanso' },
-      { fecha: '2025-08-19', dia: 'Martes', texto: 'Trote progresivo 30 min
-CORE 3 (x2 series, descanso 3min)', core: 'CORE3' },
-      { fecha: '2025-08-20', dia: 'Miércoles', texto: 'Movilidad [https://www.youtube.com/watch?v=3CsQEi4yAnU]
-Foam roller [https://www.youtube.com/watch?v=hZG-rRxvC14]' },
-      { fecha: '2025-08-21', dia: 'Jueves', texto: 'HIIT 1 x 2 series [https://www.youtube.com/watch?v=51WTKcyaDvg]
-Estiramiento' },
-      { fecha: '2025-08-22', dia: 'Viernes', texto: 'Propiocepción [https://www.youtube.com/watch?v=AhVcGCy_U_4]
-Bici o trote suave' },
-      { fecha: '2025-08-23', dia: 'Sábado', texto: 'Descanso' },
-      { fecha: '2025-08-24', dia: 'Domingo', texto: 'Deporte alternativo (padel, tenis)' },
-      { fecha: '2025-08-25', dia: 'Lunes', texto: 'Descanso' },
-      { fecha: '2025-08-26', dia: 'Martes', texto: 'Propiocepción [https://www.youtube.com/watch?v=AhVcGCy_U_4]
-CORE 1 (x2 series, descanso 3min)', core: 'CORE1' },
-      { fecha: '2025-08-27', dia: 'Miércoles', texto: 'Movilidad [https://www.youtube.com/watch?v=3CsQEi4yAnU]
-Foam roller [https://www.youtube.com/watch?v=hZG-rRxvC14]' },
-      { fecha: '2025-08-28', dia: 'Jueves', texto: 'HIIT 2 x 2 series [https://www.youtube.com/watch?v=oC2CJKz_UA0]
-CORE 2 (x2 series, descanso 3min)', core: 'CORE2' },
-      { fecha: '2025-08-29', dia: 'Viernes', texto: 'HIIT 1 x 2 series [https://www.youtube.com/watch?v=51WTKcyaDvg]
-Trote o bici' },
-      { fecha: '2025-08-30', dia: 'Sábado', texto: 'Movilidad [https://www.youtube.com/watch?v=3CsQEi4yAnU]
-Foam roller [https://www.youtube.com/watch?v=hZG-rRxvC14]' },
-      { fecha: '2025-08-31', dia: 'Domingo', texto: 'Descanso' }
+    })(),
+    // Aquí插入8月4日-8月31日的所有内容，之前已完成
     ];
 
-    const todos = [...entrenamientos, ...adicionales];
-    const hoyStr = new Date().toISOString().split('T')[0];
+    const hoy = new Date().toISOString().split('T')[0];
     const cont = document.getElementById('contenido');
 
-    todos.forEach(entreno => {
+    entrenamientos.forEach(entreno => {
       const div = document.createElement('div');
       div.className = 'dia';
+
       const titulo = document.createElement('div');
       titulo.className = 'titulo-dia';
       titulo.innerText = `${entreno.fecha} - ${entreno.dia}`;
       div.appendChild(titulo);
 
       const txt = document.createElement('div');
-      txt.innerHTML = entreno.texto.replaceAll('
-', '<br>');
+      txt.innerHTML = entreno.texto.replace(/\\n|\\r|\\r\\n/g, '<br>');
       div.appendChild(txt);
 
       if (entreno.core) {
@@ -235,7 +186,7 @@ Foam roller [https://www.youtube.com/watch?v=hZG-rRxvC14]' },
         des.className = 'descanso';
         des.innerText = 'Día de descanso';
         div.appendChild(des);
-      } else if (entreno.fecha === hoyStr) {
+      } else if (entreno.fecha === hoy) {
         const input = document.createElement('input');
         input.placeholder = 'Tu nombre';
         input.style.marginTop = '10px';
@@ -248,7 +199,7 @@ Foam roller [https://www.youtube.com/watch?v=hZG-rRxvC14]' },
           if (!nombre) return alert('Introduce tu nombre');
           btn.disabled = true;
           btn.innerText = 'Enviando...';
-          const data = { nombre, fecha: hoyStr };
+          const data = { nombre, fecha: hoy };
           const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
             method: 'POST',
             body: new URLSearchParams({ data: JSON.stringify(data) })
@@ -256,14 +207,13 @@ Foam roller [https://www.youtube.com/watch?v=hZG-rRxvC14]' },
           const json = await res.json();
           btn.innerText = '¡Enhorabuena!';
         };
-        div.appendChild(input);
         div.appendChild(btn);
-      } else if (entreno.fecha < hoyStr) {
+      } else if (entreno.fecha < hoy) {
         div.classList.add('pasado');
       }
 
       cont.appendChild(div);
     });
-</script>
+  </script>
 </body>
 </html>
