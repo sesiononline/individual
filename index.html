@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Periodo Transitorio Optimizado</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+    }
+
+    .background {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .background img {
+      width: 160px;
+      opacity: 0.3;
+    }
+
+    .main-container {
+      max-width: 700px;
+      margin: auto;
+      background-color: #ffffff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      margin-top: -20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    .dia {
+      border: 1px solid #ccc;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: white;
+      position: relative;
+    }
+
+    .pasado {
+      color: #aaa;
+      text-decoration: line-through;
+    }
+
+    .titulo-dia {
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .descanso {
+      color: #888;
+    }
+
+    button {
+      background-color: #00b894;
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      margin-top: 10px;
+      font-size: 14px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #019875;
+    }
+
+    input[type="text"] {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    .img-core {
+      max-width: 100%;
+      margin-top: 10px;
+      border-radius: 10px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+    }
+
+    .overlay img {
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 28px;
+      color: white;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="background">
+    <img src="FC Grama.png" alt="Fe Grama" />
+  </div>
+
+  <div class="main-container">
+    <h1>Periodo Transitorio Optimizado</h1>
+    <div id="contenido"></div>
+  </div>
+
+  <div id="overlay" class="oculto overlay" onclick="cerrarImagen()">
+    <span class="overlay-close">&times;</span>
+    <img id="img-grande" src="" alt="CORE">
+  </div>
+
+  <script>
+    const coreImgs = {
+      'CORE1': 'https://ruta.com/CORE1.jpg',
+      'CORE2': 'https://ruta.com/CORE2.jpg',
+      'CORE3': 'https://ruta.com/CORE3.jpg'
+    };
+
+    const entrenamientos = (() => {
+      const hoy = new Date();
+      const offset = hoy.getTimezoneOffset();
+      const bcn = new Date(hoy.getTime() - offset * 60000); // UTC → local
+      const lista = [];
+      for (let i = 0; i < 7; i++) {
+        const d = new Date(bcn);
+        d.setDate(bcn.getDate() + i);
+        const fechaISO = d.toISOString().split('T')[0];
+        const dia = d.toLocaleDateString('es-ES', { weekday: 'long' });
+        lista.push({
+          fecha: fechaISO,
+          dia: dia.charAt(0).toUpperCase() + dia.slice(1),
+          texto: `Entrenamiento funcional básico y estiramientos`,
+          core: i % 2 === 0 ? 'CORE1' : undefined
+        });
+      }
+      return lista;
+    })();
+
+    const hoy = new Date().toISOString().split('T')[0];
+    const cont = document.getElementById('contenido');
+
+    entrenamientos.forEach(entreno => {
+      const div = document.createElement('div');
+      div.className = 'dia';
+
+      const titulo = document.createElement('div');
+      titulo.className = 'titulo-dia';
+      titulo.innerText = `${entreno.fecha} - ${entreno.dia}`;
+      div.appendChild(titulo);
+
+      const txt = document.createElement('div');
+      txt.innerHTML = entreno.texto.replaceAll('\n', '<br>');
+      div.appendChild(txt);
+
+      if (entreno.core) {
+        const ver = document.createElement('button');
+        ver.innerText = 'Ver CORE';
+        ver.onclick = () => mostrarImagen(coreImgs[entreno.core]);
+        div.appendChild(ver);
+      }
+
+      if (entreno.texto.toLowerCase().includes('descanso')) {
+        const des = document.createElement('div');
+        des.className = 'descanso';
+        des.innerText = 'Día de descanso';
+        div.appendChild(des);
+      } else if (entreno.fecha === hoy) {
+        const input = document.createElement('input');
+        input.placeholder = 'Tu nombre';
+        input.style.marginTop = '10px';
+        div.appendChild(input);
+
+        const btn = document.createElement('button');
+        btn.innerText = '✅ Marcar como completado';
+        btn.onclick = async () => {
+          const nombre = input.value.trim();
+          if (!nombre) return alert('Introduce tu nombre');
+          btn.disabled = true;
+          btn.innerText = 'Enviando...';
+          const data = { nombre, fecha: hoy };
+          const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
+            method: 'POST',
+            body: new URLSearchParams({ data: JSON.stringify(data) })
+          });
+          const json = await res.json();
+          btn.innerText = '¡Enhorabuena!';
+        };
+        div.appendChild(btn);
+      } else if (entreno.fecha < hoy) {
+        div.classList.add('pasado');
+      }
+
+      cont.appendChild(div);
+    });
+
+    function mostrarImagen(url) {
+      document.getElementById('img-grande').src = url;
+      document.getElementById('overlay').classList.remove('oculto');
+    }
+
+    function cerrarImagen() {
+      document.getElementById('overlay').classList.add('oculto');
+    }
+  </script>
+</body>
+</html>
