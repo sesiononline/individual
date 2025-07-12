@@ -81,17 +81,17 @@
       border-radius: 10px;
     }
     .overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0,0,0,0.8);
-  justify-content: center;
-  align-items: center;
-  z-index: 10;
-  display: none; /* ✅ 强制默认隐藏 */
-  }
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      justify-content: center;
+      align-items: center;
+      z-index: 10;
+      display: none;
+    }
     .overlay img {
       max-width: 90%;
       max-height: 90%;
@@ -128,22 +128,21 @@
     };
 
     function mostrarImagen(url) {
-  if (!url) return;
-  const overlay = document.getElementById('overlay');
-  const img = document.getElementById('img-grande');
-  img.src = url;
-  overlay.classList.remove('oculto');
-  overlay.style.display = 'flex'; // 🔧 防止某些浏览器无视类切换
-}
+      if (!url) return;
+      const overlay = document.getElementById('overlay');
+      const img = document.getElementById('img-grande');
+      img.src = url;
+      overlay.classList.remove('oculto');
+      overlay.style.display = 'flex';
+    }
 
     function cerrarImagen() {
-  const overlay = document.getElementById('overlay');
-  const img = document.getElementById('img-grande');
-  overlay.classList.add('oculto');
-  overlay.style.display = 'none';
-  img.removeAttribute('src');
-}
-
+      const overlay = document.getElementById('overlay');
+      const img = document.getElementById('img-grande');
+      img.removeAttribute('src');
+      overlay.classList.add('oculto');
+      overlay.style.display = 'none';
+    }
 
     const entrenamientos = [...(() => {
       const hoy = new Date();
@@ -164,7 +163,7 @@
       }
       return lista;
     })(),
-    // Aquí插入8月4日-8月31日的所有内容，之前已完成
+    // Aquí插入8月4日-8月31日的所有内容
     ];
 
     const hoy = new Date().toISOString().split('T')[0];
@@ -196,32 +195,40 @@
         des.innerText = 'Día de descanso';
         div.appendChild(des);
       } else if (entreno.fecha === hoy) {
-  const input = document.createElement('input');
-  input.placeholder = 'Nombre Apellido';
-  input.style.margin = '15px 0 10px';
-  input.style.display = 'block'; // 强制换行显示
-  div.appendChild(input);
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.placeholder = 'Nombre Apellido';
+        input.style.margin = '15px 0 10px';
+        input.style.display = 'block';
+        input.style.width = '100%';
+        input.style.padding = '10px';
+        input.style.border = '1px solid #ccc';
+        input.style.borderRadius = '5px';
+        div.appendChild(input);
 
-  const btn = document.createElement('button');
-  btn.innerText = 'Ya he entrenado';
-  btn.style.display = 'block';  // 强制换行显示
-  btn.style.width = '100%';     // 可选：按钮宽度占满
-  btn.onclick = async () => {
-    const nombre = input.value.trim();
-    if (!nombre) return alert('Introduce tu nombre');
-    btn.disabled = true;
-    btn.innerText = 'Enviando...';
-    const data = { nombre, fecha: hoy };
-    const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
-      method: 'POST',
-      body: new URLSearchParams({ data: JSON.stringify(data) })
-    });
-    const json = await res.json();
-    btn.innerText = '¡Enhorabuena!';
-  };
-  div.appendChild(btn);
-}
-
+        const btn = document.createElement('button');
+        btn.innerText = 'Ya he entrenado';
+        btn.style.display = 'block';
+        btn.style.width = '100%';
+        btn.style.marginTop = '5px';
+        btn.style.padding = '10px 12px';
+        btn.style.fontSize = '15px';
+        btn.onclick = async () => {
+          const nombre = input.value.trim();
+          if (!nombre) return alert('Introduce tu nombre');
+          btn.disabled = true;
+          btn.innerText = 'Enviando...';
+          const data = { nombre, fecha: hoy };
+          const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
+            method: 'POST',
+            body: new URLSearchParams({ data: JSON.stringify(data) })
+          });
+          const json = await res.json();
+          btn.innerText = '¡Enhorabuena!';
+          btn.style.backgroundColor = '#ccc';
+          btn.style.cursor = 'default';
+        };
+        div.appendChild(btn);
       } else if (entreno.fecha < hoy) {
         div.classList.add('pasado');
       }
@@ -232,12 +239,7 @@
 
   <script>
     window.onload = () => {
-      const overlay = document.getElementById('overlay');
-      const img = document.getElementById('img-grande');
-      if (overlay && img) {
-        overlay.classList.add('oculto');
-        img.removeAttribute('src');
-      }
+      cerrarImagen();
     };
   </script>
 </body>
