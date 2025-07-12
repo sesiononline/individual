@@ -67,12 +67,12 @@
       background-color: #019875;
     }
     input[type="text"] {
-      width: 100%;
-      padding: 10px;
-      margin-top: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
+  width: 100%;
+  padding: 12px;
+  margin: 16px 0;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  }
     .success {
       margin-top: 10px;
       color: green;
@@ -238,7 +238,7 @@ const cont = document.getElementById('contenido');
           input.placeholder = 'Nombre Apellido';
 
           const btn = document.createElement('button');
-          btn.innerText = 'Ya he entrenado';
+          btn.innerText = 'Hecho';
 
           const reset = document.createElement('button');
           reset.innerText = 'Reiniciar';
@@ -272,7 +272,7 @@ const cont = document.getElementById('contenido');
             input.value = '';
             btn.disabled = false;
             reset.disabled = false;
-            btn.innerText = 'Ya he entrenado';
+            btn.innerText = 'Hecho';
             success.innerText = '';
           };
 
