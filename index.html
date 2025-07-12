@@ -196,27 +196,32 @@
         des.innerText = 'Día de descanso';
         div.appendChild(des);
       } else if (entreno.fecha === hoy) {
-        const input = document.createElement('input');
-        input.placeholder = 'Tu nombre';
-        input.style.marginTop = '10px';
-        div.appendChild(input);
+  const input = document.createElement('input');
+  input.placeholder = 'Nombre Apellido';
+  input.style.margin = '15px 0 10px';
+  input.style.display = 'block'; // 强制换行显示
+  div.appendChild(input);
 
-        const btn = document.createElement('button');
-        btn.innerText = '✅ Marcar como completado';
-        btn.onclick = async () => {
-          const nombre = input.value.trim();
-          if (!nombre) return alert('Introduce tu nombre');
-          btn.disabled = true;
-          btn.innerText = 'Enviando...';
-          const data = { nombre, fecha: hoy };
-          const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
-            method: 'POST',
-            body: new URLSearchParams({ data: JSON.stringify(data) })
-          });
-          const json = await res.json();
-          btn.innerText = '¡Enhorabuena!';
-        };
-        div.appendChild(btn);
+  const btn = document.createElement('button');
+  btn.innerText = 'Ya he entrenado';
+  btn.style.display = 'block';  // 强制换行显示
+  btn.style.width = '100%';     // 可选：按钮宽度占满
+  btn.onclick = async () => {
+    const nombre = input.value.trim();
+    if (!nombre) return alert('Introduce tu nombre');
+    btn.disabled = true;
+    btn.innerText = 'Enviando...';
+    const data = { nombre, fecha: hoy };
+    const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
+      method: 'POST',
+      body: new URLSearchParams({ data: JSON.stringify(data) })
+    });
+    const json = await res.json();
+    btn.innerText = '¡Enhorabuena!';
+  };
+  div.appendChild(btn);
+}
+
       } else if (entreno.fecha < hoy) {
         div.classList.add('pasado');
       }
