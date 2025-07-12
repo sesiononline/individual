@@ -81,17 +81,17 @@
       border-radius: 10px;
     }
     .overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      background: rgba(0,0,0,0.8);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      z-index: 10;
-    }
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.8);
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+  display: none; /* ✅ 强制默认隐藏 */
+  }
     .overlay img {
       max-width: 90%;
       max-height: 90%;
@@ -128,16 +128,22 @@
     };
 
     function mostrarImagen(url) {
-      if (!url) return;
-      const img = document.getElementById('img-grande');
-      img.src = url;
-      document.getElementById('overlay').classList.remove('oculto');
-    }
+  if (!url) return;
+  const overlay = document.getElementById('overlay');
+  const img = document.getElementById('img-grande');
+  img.src = url;
+  overlay.classList.remove('oculto');
+  overlay.style.display = 'flex'; // 🔧 防止某些浏览器无视类切换
+}
 
     function cerrarImagen() {
-      document.getElementById('overlay').classList.add('oculto');
-      document.getElementById('img-grande').removeAttribute('src');
-    }
+  const overlay = document.getElementById('overlay');
+  const img = document.getElementById('img-grande');
+  overlay.classList.add('oculto');
+  overlay.style.display = 'none';
+  img.removeAttribute('src');
+}
+
 
     const entrenamientos = [...(() => {
       const hoy = new Date();
