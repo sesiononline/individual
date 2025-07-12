@@ -128,12 +128,15 @@
     };
 
     function mostrarImagen(url) {
-      document.getElementById('img-grande').src = url;
+      if (!url) return;
+      const img = document.getElementById('img-grande');
+      img.src = url;
       document.getElementById('overlay').classList.remove('oculto');
     }
 
     function cerrarImagen() {
       document.getElementById('overlay').classList.add('oculto');
+      document.getElementById('img-grande').removeAttribute('src');
     }
 
     const entrenamientos = [...(() => {
@@ -171,9 +174,8 @@
       div.appendChild(titulo);
 
       const txt = document.createElement('div');
-txt.innerHTML = entreno.texto.replace(/\n|\r|\r\n/g, '<br>');
-div.appendChild(txt);
-
+      txt.innerHTML = entreno.texto.replace(/\n|\r|\r\n/g, '<br>');
+      div.appendChild(txt);
 
       if (entreno.core) {
         const ver = document.createElement('button');
@@ -218,16 +220,14 @@ div.appendChild(txt);
   </script>
 
   <script>
-  window.onload = () => {
-    const overlay = document.getElementById('overlay');
-    const img = document.getElementById('img-grande');
-    if (overlay && img) {
-      overlay.classList.add('oculto');
-      img.removeAttribute('src');
-    }
-  };
-</script>
-
-
+    window.onload = () => {
+      const overlay = document.getElementById('overlay');
+      const img = document.getElementById('img-grande');
+      if (overlay && img) {
+        overlay.classList.add('oculto');
+        img.removeAttribute('src');
+      }
+    };
+  </script>
 </body>
 </html>
