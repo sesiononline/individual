@@ -11,44 +11,37 @@
       margin: 0;
       padding: 0;
     }
-
     .background {
       text-align: center;
-      margin-top: 20px;
+      margin-top: 10px;
+      margin-bottom: -40px;
     }
-
     .background img {
-      width: 180px;
-      opacity: 0.2;
+      width: 160px;
+      opacity: 0.3;
     }
-
     .main-container {
       max-width: 800px;
       margin: auto;
       background-color: #ffffff;
-      padding: 25px;
+      padding: 30px 25px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-      margin-top: -30px;
     }
-
     h1 {
       text-align: center;
       margin-bottom: 35px;
       color: #333;
     }
-
     .semana {
       border-radius: 12px;
       padding: 20px 25px;
       margin-bottom: 30px;
     }
-
     .semana-1 { background-color: #e6f7ff; }
     .semana-2 { background-color: #f9f0ff; }
     .semana-3 { background-color: #fffbe6; }
     .semana-4 { background-color: #f6ffed; }
-
     .dia {
       border: 1px solid #ccc;
       border-radius: 10px;
@@ -56,17 +49,10 @@
       margin-bottom: 14px;
       background: white;
     }
-
     .titulo-dia {
       font-weight: bold;
       margin-bottom: 10px;
     }
-
-    .descanso {
-      color: #888;
-      font-style: italic;
-    }
-
     button {
       background-color: #00b894;
       color: white;
@@ -77,11 +63,9 @@
       border-radius: 5px;
       cursor: pointer;
     }
-
     button:hover {
       background-color: #019875;
     }
-
     input[type="text"] {
       width: 100%;
       padding: 10px;
@@ -89,7 +73,6 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
-
     .success {
       margin-top: 10px;
       color: green;
@@ -98,11 +81,10 @@
   </style>
 </head>
 <body>
-  <div class="background">
-    <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
-  </div>
-
   <div class="main-container">
+    <div class="background">
+      <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
+    </div>
     <h1>Periodo Transitorio Optimizado</h1>
     <div id="contenido"></div>
   </div>
@@ -114,10 +96,48 @@
       'CORE3': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE3.png'
     };
 
-    function convertirLinks(texto) {
-      return texto.replace(/(https?:\/\/[^\s<]+)/g, (url) => {
+    function convertirLinksYCore(texto, container) {
+      let html = texto.replace(/(https?:\/\/[^\s]+)/g, (url) => {
         return `<button onclick="window.open('${url}', '_blank')">Ver vídeo</button>`;
       });
+
+      const coreMatch = texto.match(/\(image:\s?(CORE\d)\)/);
+      if (coreMatch) {
+        const coreKey = coreMatch[1];
+        const coreBtn = document.createElement('button');
+        coreBtn.innerText = `Ver ${coreKey}`;
+        coreBtn.onclick = () => mostrarCORE(coreKey);
+        container.innerHTML = html.replace(/\(image:\s?CORE\d\)/, '') + ' ';
+        container.appendChild(coreBtn);
+      } else {
+        container.innerHTML = html;
+      }
+    }
+
+    function mostrarCORE(coreKey) {
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100%';
+      overlay.style.height = '100%';
+      overlay.style.background = 'rgba(0,0,0,0.8)';
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+      overlay.style.zIndex = 9999;
+
+      const img = new Image();
+      img.src = coreImgs[coreKey];
+      img.style.maxWidth = '90vw';
+      img.style.maxHeight = '90vh';
+      img.style.borderRadius = '8px';
+      img.style.boxShadow = '0 0 12px #000';
+
+      overlay.appendChild(img);
+      overlay.onclick = () => overlay.remove();
+
+      document.body.appendChild(overlay);
     }
 
     const entrenamientos = [
@@ -194,8 +214,57 @@
         dia.appendChild(t);
 
         const contenido = document.createElement('div');
-        contenido.innerHTML = convertirLinks(texto.replace(/\n/g, '<br>'));
+        convertirLinksYCore(texto.replace(/\n/g, '<br>'), contenido);
         dia.appendChild(contenido);
+
+        if (!/descanso/i.test(texto)) {
+          const input = document.createElement('input');
+          input.placeholder = 'Nombre Apellido';
+
+          const btn = document.createElement('button');
+          btn.innerText = 'Ya he entrenado';
+
+          const reset = document.createElement('button');
+          reset.innerText = 'Reiniciar';
+          reset.style.backgroundColor = '#888';
+          reset.style.marginLeft = '10px';
+
+          const success = document.createElement('div');
+          success.className = 'success';
+
+          btn.onclick = async () => {
+            const nombre = input.value.trim();
+            if (!nombre) return alert('Introduce tu nombre');
+            btn.disabled = true;
+            reset.disabled = true;
+            btn.innerText = 'Enviando...';
+            const data = {
+              nombre,
+              fecha,
+              contenido: texto
+            };
+            const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
+              method: 'POST',
+              body: new URLSearchParams({ data: JSON.stringify(data) })
+            });
+            const json = await res.json();
+            btn.innerText = '¡Enhorabuena!';
+            success.innerText = '✅ Entrenamiento registrado';
+          };
+
+          reset.onclick = () => {
+            input.value = '';
+            btn.disabled = false;
+            reset.disabled = false;
+            btn.innerText = 'Ya he entrenado';
+            success.innerText = '';
+          };
+
+          dia.appendChild(input);
+          dia.appendChild(btn);
+          dia.appendChild(reset);
+          dia.appendChild(success);
+        }
 
         semanaDiv.appendChild(dia);
       });
