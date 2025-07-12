@@ -117,7 +117,7 @@
 
   <div id="overlay" class="oculto overlay" onclick="cerrarImagen()">
     <span class="overlay-close">&times;</span>
-    <img id="img-grande" src="" alt="CORE">
+    <img id="img-grande" alt="CORE">
   </div>
 
   <script>
@@ -219,10 +219,15 @@ div.appendChild(txt);
 
   <script>
   window.onload = () => {
-    document.getElementById('overlay').classList.add('oculto');
-    document.getElementById('img-grande').src = '';
+    const overlay = document.getElementById('overlay');
+    const img = document.getElementById('img-grande');
+    if (overlay && img) {
+      overlay.classList.add('oculto');
+      img.removeAttribute('src');
+    }
   };
 </script>
+
 
 </body>
 </html>
