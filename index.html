@@ -253,7 +253,6 @@ const cont = document.getElementById('contenido');
             const nombre = input.value.trim();
             if (!nombre) return alert('Introduce tu nombre');
             btn.disabled = true;
-            reset.disabled = true;
             btn.innerText = 'Enviando...';
             const data = {
               nombre,
