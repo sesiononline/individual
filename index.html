@@ -12,21 +12,24 @@
       padding: 0;
     }
     .background {
+      position: relative;
       text-align: center;
-      margin-top: 10px;
-      margin-bottom: -40px;
+      margin-top: -100px;
+      z-index: 1;
     }
     .background img {
-      width: 160px;
-      opacity: 0.3;
+      width: 120px;
+      opacity: 0.25;
     }
     .main-container {
       max-width: 800px;
       margin: auto;
       background-color: #ffffff;
-      padding: 30px 25px;
+      padding: 40px 25px 25px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      position: relative;
+      z-index: 2;
     }
     h1 {
       text-align: center;
@@ -100,9 +103,9 @@
       'CORE3': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE3.png'
     };
 
-    // 👉 将 URL 替换为按钮
     function convertirLinks(texto) {
-      return texto.replace(/(https?:\/\/[^\s]+)/g, (url) => {
+      return texto.replace(/(https?:\/\/[^
+<\s]+)/g, (url) => {
         return `<button onclick="window.open('${url}', '_blank')">Ver vídeo</button>`;
       });
     }
@@ -140,7 +143,7 @@
         dias: [
           ['18-08-2025 - Lunes', 'Descanso'],
           ['19-08-2025 - Martes', '1, Trote progresivo 30 min\n2, CORE 3 (image: CORE3) x 2 series, pausa-3 minutos entre sereies'],
-          ['20-08-2025 - Miércoles', '1, Movilidad: https://www.youtube.com/watch?v=3CsQEi4yAnU\n2, Foam roller: https://www.youtube.com/watch?v=hZG-rRxvC14'],
+          ['20-08-2025 - Miércoles', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU\n2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
           ['21-08-2025 - Jueves', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg\n2, estiramiento'],
           ['22-08-2025 - Viernes', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4\n2, bici o trote suave'],
           ['23-08-2025 - Sábado', 'Descanso'],
@@ -183,82 +186,6 @@
         const contenido = document.createElement('div');
         contenido.innerHTML = convertirLinks(texto.replace(/\n/g, '<br>'));
         dia.appendChild(contenido);
-
-        if (!/descanso/i.test(texto)) {
-          const input = document.createElement('input');
-          input.placeholder = 'Nombre Apellido';
-
-          const btn = document.createElement('button');
-          btn.innerText = 'Ya he entrenado';
-
-          const reset = document.createElement('button');
-          reset.innerText = 'Reiniciar';
-          reset.style.backgroundColor = '#888';
-          reset.style.marginLeft = '10px';
-
-          const success = document.createElement('div');
-          success.className = 'success';
-
-          btn.onclick = async () => {
-            const nombre = input.value.trim();
-            if (!nombre) return alert('Introduce tu nombre');
-            btn.disabled = true;
-            reset.disabled = true;
-            btn.innerText = 'Enviando...';
-            const data = {
-              nombre,
-              fecha,
-              contenido: texto
-            };
-            const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
-              method: 'POST',
-              body: new URLSearchParams({ data: JSON.stringify(data) })
-            });
-            const json = await res.json();
-            btn.innerText = '¡Enhorabuena!';
-            success.innerText = '✅ Entrenamiento registrado';
-          };
-
-          reset.onclick = () => {
-            input.value = '';
-            btn.disabled = false;
-            reset.disabled = false;
-            btn.innerText = 'Ya he entrenado';
-            success.innerText = '';
-          };
-
-          dia.appendChild(input);
-          dia.appendChild(btn);
-          dia.appendChild(reset);
-          dia.appendChild(success);
-
-          if (/CORE (\d)/i.test(texto)) {
-            const match = texto.match(/CORE (\d)/);
-            const coreBtn = document.createElement('button');
-            coreBtn.innerText = 'Ver CORE';
-            coreBtn.style.marginLeft = '10px';
-            coreBtn.onclick = () => {
-              const img = new Image();
-              img.src = coreImgs['CORE' + match[1]];
-              img.style.maxWidth = '90vw';
-              img.style.maxHeight = '90vh';
-              const overlay = document.createElement('div');
-              overlay.style.position = 'fixed';
-              overlay.style.top = 0;
-              overlay.style.left = 0;
-              overlay.style.right = 0;
-              overlay.style.bottom = 0;
-              overlay.style.background = 'rgba(0,0,0,0.8)';
-              overlay.style.display = 'flex';
-              overlay.style.justifyContent = 'center';
-              overlay.style.alignItems = 'center';
-              overlay.appendChild(img);
-              overlay.onclick = () => overlay.remove();
-              document.body.appendChild(overlay);
-            };
-            dia.appendChild(coreBtn);
-          }
-        }
 
         semanaDiv.appendChild(dia);
       });
