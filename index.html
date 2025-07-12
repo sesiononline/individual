@@ -13,7 +13,7 @@
     }
     .background {
       text-align: center;
-      margin-top: -60px;
+      margin-top: 10px;
       margin-bottom: -40px;
     }
     .background img {
@@ -57,10 +57,6 @@
       color: #888;
       font-style: italic;
     }
-    .link {
-      color: #1a73e8;
-      text-decoration: underline;
-    }
     button {
       background-color: #00b894;
       color: white;
@@ -86,9 +82,6 @@
       color: green;
       font-weight: bold;
     }
-    .oculto {
-      display: none;
-    }
   </style>
 </head>
 <body>
@@ -106,6 +99,13 @@
       'CORE2': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE2.png',
       'CORE3': 'https://raw.githubusercontent.com/sesiononline/individual/main/CORE3.png'
     };
+
+    // 👉 将 URL 替换为按钮
+    function convertirLinks(texto) {
+      return texto.replace(/(https?:\/\/[^\s]+)/g, (url) => {
+        return `<button onclick="window.open('${url}', '_blank')">Ver vídeo</button>`;
+      });
+    }
 
     const entrenamientos = [
       {
@@ -181,7 +181,7 @@
         dia.appendChild(t);
 
         const contenido = document.createElement('div');
-        contenido.innerHTML = texto.replace(/\n/g, '<br>');
+        contenido.innerHTML = convertirLinks(texto.replace(/\n/g, '<br>'));
         dia.appendChild(contenido);
 
         if (!/descanso/i.test(texto)) {
