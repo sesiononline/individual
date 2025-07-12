@@ -13,7 +13,8 @@
     }
     .background {
       text-align: center;
-      margin-top: 20px;
+      margin-top: -60px;
+      margin-bottom: -40px;
     }
     .background img {
       width: 160px;
@@ -23,19 +24,19 @@
       max-width: 800px;
       margin: auto;
       background-color: #ffffff;
-      padding: 25px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 30px 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
     }
     h1 {
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 35px;
       color: #333;
     }
     .semana {
-      border-radius: 10px;
-      padding: 20px;
-      margin-bottom: 25px;
+      border-radius: 12px;
+      padding: 20px 25px;
+      margin-bottom: 30px;
     }
     .semana-1 { background-color: #e6f7ff; }
     .semana-2 { background-color: #f9f0ff; }
@@ -43,9 +44,9 @@
     .semana-4 { background-color: #f6ffed; }
     .dia {
       border: 1px solid #ccc;
-      border-radius: 8px;
+      border-radius: 10px;
       padding: 15px;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       background: white;
     }
     .titulo-dia {
@@ -91,165 +92,14 @@
   </style>
 </head>
 <body>
-  <div class="background">
-    <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
-  </div>
   <div class="main-container">
+    <div class="background">
+      <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
+    </div>
     <h1>Periodo Transitorio Optimizado</h1>
-
     <div id="contenido"></div>
   </div>
 
-  <script>
-    const semanas = [
-      {
-        nombre: 'Semana 1 (Aumento y movilidad)',
-        clase: 'semana-1',
-        dias: [
-          { fecha: '04-08-2025 - Lunes', contenido: 'Descanso activo (caminar 30–45 min o bici suave)' },
-          { fecha: '05-08-2025 - Martes', contenido: '1, 20 min trote suave\n2, CORE 1 x2 series, descanso 3 minutos entre series', core: 'CORE1' },
-          { fecha: '06-08-2025 - Miércoles', contenido: 'Descanso' },
-          { fecha: '07-08-2025 - Jueves', contenido: '1, Propiocepción', link: 'https://www.youtube.com/watch?v=AhVcGCy_U_4', core: 'CORE1' },
-          { fecha: '08-08-2025 - Viernes', contenido: 'Descanso' },
-          { fecha: '09-08-2025 - Sábado', contenido: 'Deporte alternativo (padel, natación)' },
-          { fecha: '10-08-2025 - Domingo', contenido: 'Descanso total' }
-        ]
-      },
-      {
-        nombre: 'Semana 2 (Aeróbico suave y estabilidad)',
-        clase: 'semana-2',
-        dias: [
-          { fecha: '11-08-2025 - Lunes', contenido: '1, 30 min bici o trote suave\n2, CORE 2 x2 series, descanso 3 minutos', core: 'CORE2' },
-          { fecha: '12-08-2025 - Martes', contenido: '1, HIIT 1 x2 series, descanso 3 minutos\n2, estiramiento estático', link: 'https://www.youtube.com/watch?v=51WTKcyaDvg' },
-          { fecha: '13-08-2025 - Miércoles', contenido: 'Descanso' },
-          { fecha: '14-08-2025 - Jueves', contenido: 'Descanso' },
-          { fecha: '15-08-2025 - Viernes', contenido: '1, HIIT 2 x2 series, descanso 3 minutos\n2, CORE 2 x2 series', link: 'https://www.youtube.com/watch?v=oC2CJKz_UA0', core: 'CORE2' },
-          { fecha: '16-08-2025 - Sábado', contenido: 'Descanso' },
-          { fecha: '17-08-2025 - Domingo', contenido: 'Deporte alternativo (natación, futvoley)' }
-        ]
-      },
-      {
-        nombre: 'Semana 3 (Activación progresiva)',
-        clase: 'semana-3',
-        dias: [
-          { fecha: '18-08-2025 - Lunes', contenido: 'Descanso' },
-          { fecha: '19-08-2025 - Martes', contenido: '1, Trote progresivo 30 min\n2, CORE 3 x2 series, descanso 3 minutos', core: 'CORE3' },
-          { fecha: '20-08-2025 - Miércoles', contenido: '1, Movilidad\n2, Foam roller', link: 'https://www.youtube.com/watch?v=3CsQEi4yAnU' },
-          { fecha: '21-08-2025 - Jueves', contenido: '1, HIIT 1 x2 series\n2, Estiramiento', link: 'https://www.youtube.com/watch?v=51WTKcyaDvg' },
-          { fecha: '22-08-2025 - Viernes', contenido: '1, Propiocepción\n2, Bici o trote suave', link: 'https://www.youtube.com/watch?v=AhVcGCy_U_4' },
-          { fecha: '23-08-2025 - Sábado', contenido: 'Descanso' },
-          { fecha: '24-08-2025 - Domingo', contenido: 'Deporte alternativo (padel, tenis)' }
-        ]
-      },
-      {
-        nombre: 'Semana 4 (Preparación para pretemporada)',
-        clase: 'semana-4',
-        dias: [
-          { fecha: '25-08-2025 - Lunes', contenido: 'Descanso' },
-          { fecha: '26-08-2025 - Martes', contenido: '1, Propiocepción\n2, CORE 1 x2 series, descanso 3 minutos', link: 'https://www.youtube.com/watch?v=AhVcGCy_U_4', core: 'CORE1' },
-          { fecha: '27-08-2025 - Miércoles', contenido: '1, Movilidad\n2, Foam roller', link: 'https://www.youtube.com/watch?v=3CsQEi4yAnU' },
-          { fecha: '28-08-2025 - Jueves', contenido: '1, HIIT 2 x2 series\n2, CORE 2 x2 series', link: 'https://www.youtube.com/watch?v=oC2CJKz_UA0', core: 'CORE2' },
-          { fecha: '29-08-2025 - Viernes', contenido: '1, HIIT 1 x2 series\n2, Trote o bici', link: 'https://www.youtube.com/watch?v=51WTKcyaDvg' },
-          { fecha: '30-08-2025 - Sábado', contenido: 'Movilidad + foam roller (opcional)', link: 'https://www.youtube.com/watch?v=3CsQEi4yAnU' },
-          { fecha: '31-08-2025 - Domingo', contenido: 'Descanso' }
-        ]
-      }
-    ];
-
-    const cont = document.getElementById('contenido');
-    semanas.forEach(sem => {
-      const bloque = document.createElement('div');
-      bloque.className = `semana ${sem.clase}`;
-
-      const titulo = document.createElement('h3');
-      titulo.innerText = sem.nombre;
-      bloque.appendChild(titulo);
-
-      sem.dias.forEach(dia => {
-        const diaDiv = document.createElement('div');
-        diaDiv.className = 'dia';
-
-        const tituloDia = document.createElement('div');
-        tituloDia.className = 'titulo-dia';
-        tituloDia.innerText = dia.fecha;
-        diaDiv.appendChild(tituloDia);
-
-        const texto = document.createElement('div');
-        texto.innerHTML = dia.contenido.replaceAll('\n', '<br>');
-        diaDiv.appendChild(texto);
-
-        if (dia.link) {
-          const link = document.createElement('a');
-          link.href = dia.link;
-          link.target = '_blank';
-          link.className = 'link';
-          link.innerText = 'Ver video';
-          diaDiv.appendChild(link);
-        }
-
-        if (dia.core) {
-          const imgBtn = document.createElement('button');
-          imgBtn.innerText = 'Ver CORE';
-          imgBtn.onclick = () => window.open(`https://raw.githubusercontent.com/sesiononline/individual/main/${dia.core}.png`, '_blank');
-          diaDiv.appendChild(imgBtn);
-        }
-
-        if (!dia.contenido.toLowerCase().includes('descanso')) {
-          const input = document.createElement('input');
-          input.placeholder = 'Nombre Apellido';
-          diaDiv.appendChild(input);
-
-          const btn = document.createElement('button');
-          btn.innerText = 'Ya he entrenado';
-
-          const reset = document.createElement('button');
-          reset.innerText = 'Reiniciar';
-          reset.style.background = '#888';
-          reset.style.marginLeft = '10px';
-
-          const msg = document.createElement('div');
-          msg.className = 'success';
-
-          btn.onclick = async () => {
-            const nombre = input.value.trim();
-            if (!nombre) return alert('Introduce tu nombre');
-            btn.disabled = true;
-            btn.innerText = 'Enviando...';
-            const data = { nombre, fecha: dia.fecha, contenido: dia.contenido };
-            const res = await fetch('https://script.google.com/macros/s/AKfycbwK0Kwj_LrC09hVbU5EQW-HUJCzUNUGHKE6UcsM8T1-9hZZ2zsW4cg4YRZpIEDQFoQR/exec', {
-              method: 'POST',
-              body: new URLSearchParams({ data: JSON.stringify(data) })
-            });
-            const json = await res.json();
-            msg.innerText = '¡Enhorabuena!';
-            btn.innerText = 'Completado';
-            btn.style.background = '#ccc';
-            btn.style.cursor = 'default';
-          };
-
-          reset.onclick = () => {
-            input.value = '';
-            msg.innerText = '';
-            btn.disabled = false;
-            btn.innerText = 'Ya he entrenado';
-            btn.style.background = '#00b894';
-            btn.style.cursor = 'pointer';
-          };
-
-          diaDiv.appendChild(btn);
-          diaDiv.appendChild(reset);
-          diaDiv.appendChild(msg);
-        } else {
-          const descanso = document.createElement('div');
-          descanso.className = 'descanso';
-          descanso.innerText = 'Día de descanso';
-          diaDiv.appendChild(descanso);
-        }
-
-        bloque.appendChild(diaDiv);
-      });
-      cont.appendChild(bloque);
-    });
-  </script>
+  <!-- SCRIPT BLOCK HERE -->
 </body>
 </html>
