@@ -97,11 +97,12 @@
     };
 
     function convertirLinksYCore(texto, container) {
-      let html = texto.replace(/(https?:\/\/[^\s]+)/g, (url) => {
+      const textoConSaltos = texto.replace(/\n/g, '<br>');
+      let html = textoConSaltos.replace(/(https?:\/\/[^\s]+)/g, (url) => {
         return `<button onclick="window.open('${url}', '_blank')">Ver vídeo</button>`;
       });
 
-      const coreMatch = texto.match(/\(image:\s?(CORE\d)\)/);
+      const coreMatch = html.match(/\(image:\s?(CORE\d)\)/);
       if (coreMatch) {
         const coreKey = coreMatch[1];
         const coreBtn = document.createElement('button');
@@ -140,62 +141,77 @@
       document.body.appendChild(overlay);
     }
 
-    const entrenamientos = [
-      {
-        semana: 'Semana 1 (Aumento y movilidad)',
-        clase: 'semana-1',
-        dias: [
-          ['04-08-2025 - Lunes', 'Activo (caminar 30–45 min o bici suave)'],
-          ['05-08-2025 - Martes', '1, 20 min trote suave\n2, CORE 1 (image: CORE1) x 2 series, pausa-3 minutos entre sereies'],
-          ['06-08-2025 - Miércoles', 'Descanso'],
-          ['07-08-2025 - Jueves', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4\n 2, CORE 1 (image: CORE1) x 2 series, pausa-3 minutos entre sereies'],
-          ['08-08-2025 - Viernes', 'Descanso'],
-          ['09-08-2025 - Sábado', 'Deporte alternativo (padel, natación)'],
-          ['10-08-2025 - Domingo', 'Descanso total']
-        ]
-      },
-      {
-        semana: 'Semana 2 (Aeróbico suave y estabilidad)',
-        clase: 'semana-2',
-        dias: [
-          ['11-08-2025 - Lunes', '1, 30 min bici o trote suave\n2, CORE 2 (image: CORE2) x 2 series, pausa-3 minutos entre sereies'],
-          ['12-08-2025 - Martes', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg\n2, estiramiento estático'],
-          ['13-08-2025 - Miércoles', 'Descanso'],
-          ['14-08-2025 - Jueves', 'Descanso'],
-          ['15-08-2025 - Viernes', '1, HIIT 2 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=oC2CJKz_UA0\n2, CORE 2 (image: CORE2) x 2 series, pausa-3 minutos entre sereies'],
-          ['16-08-2025 - Sábado', 'Descanso'],
-          ['17-08-2025 - Domingo', 'Deporte alternativo (natación, futvoley)']
-        ]
-      },
-      {
-        semana: 'Semana 3 (Activación progresiva)',
-        clase: 'semana-3',
-        dias: [
-          ['18-08-2025 - Lunes', 'Descanso'],
-          ['19-08-2025 - Martes', '1, Trote progresivo 30 min\n2, CORE 3 (image: CORE3) x 2 series, pausa-3 minutos entre sereies'],
-          ['20-08-2025 - Miércoles', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU\n2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
-          ['21-08-2025 - Jueves', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg\n2, estiramiento'],
-          ['22-08-2025 - Viernes', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4\n2, bici o trote suave'],
-          ['23-08-2025 - Sábado', 'Descanso'],
-          ['24-08-2025 - Domingo', 'Deporte alternativo (padel, tenis)']
-        ]
-      },
-      {
-        semana: 'Semana 4 (Preparación para pretemporada)',
-        clase: 'semana-4',
-        dias: [
-          ['25-08-2025 - Lunes', 'Descanso'],
-          ['26-08-2025 - Martes', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4\n2, CORE 1 (image: CORE1) x 2 series, pausa-3 minutos entre sereies'],
-          ['27-08-2025 - Miércoles', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU\n2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
-          ['28-08-2025 - Jueves', '1, HIIT 2 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=oC2CJKz_UA0\n2, CORE 2 (image: CORE2) x 2 series, pausa-3 minutos entre sereies'],
-          ['29-08-2025 - Viernes', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg\n2, trote o bici'],
-          ['30-08-2025 - Sábado', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU\n2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
-          ['31-08-2025 - Domingo', 'Descanso']
-        ]
-      }
-    ];
+    // ⬇️ Entrenamientos insertados aquí:
+const entrenamientos = [
+  {
+    semana: 'Semana 1 (Aumento y movilidad)',
+    clase: 'semana-1',
+    dias: [
+      ['04-08-2025 - Lunes', 'Activo (caminar 30–45 min o bici suave)'],
+      ['05-08-2025 - Martes', '1, 20 min trote suave
+2, CORE 1 (image: CORE1) x 2 series, pausa-3 minutos entre sereies'],
+      ['06-08-2025 - Miércoles', 'Descanso'],
+      ['07-08-2025 - Jueves', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4
+2, CORE 1 (image: CORE1) x 2 series, pausa-3 minutos entre sereies'],
+      ['08-08-2025 - Viernes', 'Descanso'],
+      ['09-08-2025 - Sábado', 'Deporte alternativo (padel, natación)'],
+      ['10-08-2025 - Domingo', 'Descanso total']
+    ]
+  },
+  {
+    semana: 'Semana 2 (Aeróbico suave y estabilidad)',
+    clase: 'semana-2',
+    dias: [
+      ['11-08-2025 - Lunes', '1, 30 min bici o trote suave
+2, CORE 2 (image: CORE2) x 2 series, pausa-3 minutos entre sereies'],
+      ['12-08-2025 - Martes', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg
+2, estiramiento estático'],
+      ['13-08-2025 - Miércoles', 'Descanso'],
+      ['14-08-2025 - Jueves', 'Descanso'],
+      ['15-08-2025 - Viernes', '1, HIIT 2 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=oC2CJKz_UA0
+2, CORE 2 (image: CORE2) x 2 series, pausa-3 minutos entre sereies'],
+      ['16-08-2025 - Sábado', 'Descanso'],
+      ['17-08-2025 - Domingo', 'Deporte alternativo (natación, futvoley)']
+    ]
+  },
+  {
+    semana: 'Semana 3 (Activación progresiva)',
+    clase: 'semana-3',
+    dias: [
+      ['18-08-2025 - Lunes', 'Descanso'],
+      ['19-08-2025 - Martes', '1, Trote progresivo 30 min
+2, CORE 3 (image: CORE3) x 2 series, pausa-3 minutos entre sereies'],
+      ['20-08-2025 - Miércoles', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU
+2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
+      ['21-08-2025 - Jueves', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg
+2, estiramiento'],
+      ['22-08-2025 - Viernes', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4
+2, bici o trote suave'],
+      ['23-08-2025 - Sábado', 'Descanso'],
+      ['24-08-2025 - Domingo', 'Deporte alternativo (padel, tenis)']
+    ]
+  },
+  {
+    semana: 'Semana 4 (Preparación para pretemporada)',
+    clase: 'semana-4',
+    dias: [
+      ['25-08-2025 - Lunes', 'Descanso'],
+      ['26-08-2025 - Martes', '1, Propiocepción https://www.youtube.com/watch?v=AhVcGCy_U_4
+2, CORE 1 (image: CORE1) x 2 series, pausa-3 minutos entre sereies'],
+      ['27-08-2025 - Miércoles', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU
+2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
+      ['28-08-2025 - Jueves', '1, HIIT 2 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=oC2CJKz_UA0
+2, CORE 2 (image: CORE2) x 2 series, pausa-3 minutos entre sereies'],
+      ['29-08-2025 - Viernes', '1, HIIT 1 x 2 series, pausa-3 minutos entre sereies https://www.youtube.com/watch?v=51WTKcyaDvg
+2, trote o bici'],
+      ['30-08-2025 - Sábado', '1, Movilidad https://www.youtube.com/watch?v=3CsQEi4yAnU
+2, Foam roller https://www.youtube.com/watch?v=hZG-rRxvC14'],
+      ['31-08-2025 - Domingo', 'Descanso']
+    ]
+  }
+];
 
-    const cont = document.getElementById('contenido');
+const cont = document.getElementById('contenido');
 
     entrenamientos.forEach(sem => {
       const semanaDiv = document.createElement('div');
@@ -214,7 +230,7 @@
         dia.appendChild(t);
 
         const contenido = document.createElement('div');
-        convertirLinksYCore(texto.replace(/\n/g, '<br>'), contenido);
+        convertirLinksYCore(texto, contenido);
         dia.appendChild(contenido);
 
         if (!/descanso/i.test(texto)) {
