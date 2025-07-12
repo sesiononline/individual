@@ -11,40 +11,44 @@
       margin: 0;
       padding: 0;
     }
+
     .background {
-      position: relative;
       text-align: center;
-      margin-top: -100px;
-      z-index: 1;
+      margin-top: 20px;
     }
+
     .background img {
-      width: 120px;
-      opacity: 0.25;
+      width: 180px;
+      opacity: 0.2;
     }
+
     .main-container {
       max-width: 800px;
       margin: auto;
       background-color: #ffffff;
-      padding: 40px 25px 25px;
+      padding: 25px;
       border-radius: 12px;
       box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
-      position: relative;
-      z-index: 2;
+      margin-top: -30px;
     }
+
     h1 {
       text-align: center;
       margin-bottom: 35px;
       color: #333;
     }
+
     .semana {
       border-radius: 12px;
       padding: 20px 25px;
       margin-bottom: 30px;
     }
+
     .semana-1 { background-color: #e6f7ff; }
     .semana-2 { background-color: #f9f0ff; }
     .semana-3 { background-color: #fffbe6; }
     .semana-4 { background-color: #f6ffed; }
+
     .dia {
       border: 1px solid #ccc;
       border-radius: 10px;
@@ -52,14 +56,17 @@
       margin-bottom: 14px;
       background: white;
     }
+
     .titulo-dia {
       font-weight: bold;
       margin-bottom: 10px;
     }
+
     .descanso {
       color: #888;
       font-style: italic;
     }
+
     button {
       background-color: #00b894;
       color: white;
@@ -70,9 +77,11 @@
       border-radius: 5px;
       cursor: pointer;
     }
+
     button:hover {
       background-color: #019875;
     }
+
     input[type="text"] {
       width: 100%;
       padding: 10px;
@@ -80,6 +89,7 @@
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+
     .success {
       margin-top: 10px;
       color: green;
@@ -88,10 +98,11 @@
   </style>
 </head>
 <body>
+  <div class="background">
+    <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
+  </div>
+
   <div class="main-container">
-    <div class="background">
-      <img src="https://raw.githubusercontent.com/sesiononline/individual/main/FE%20Grama.png" alt="Fe Grama" />
-    </div>
     <h1>Periodo Transitorio Optimizado</h1>
     <div id="contenido"></div>
   </div>
@@ -104,8 +115,7 @@
     };
 
     function convertirLinks(texto) {
-      return texto.replace(/(https?:\/\/[^
-<\s]+)/g, (url) => {
+      return texto.replace(/(https?:\/\/[^\s<]+)/g, (url) => {
         return `<button onclick="window.open('${url}', '_blank')">Ver vídeo</button>`;
       });
     }
